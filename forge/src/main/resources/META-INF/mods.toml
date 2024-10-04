@@ -1,0 +1,51 @@
+modLoader = "javafml"
+loaderVersion = "[40,)"
+#issueTrackerURL = ""
+license = "CC-BY-4.0"
+
+[[mods]]
+modId = "ftbqkeys"
+version = "${version}"
+displayName = "FTBQLocalizationKeys"
+displayURL = "https://github.com/LocalizedMC/FTBQLocalizationKeys-Arch"
+credits = "BlackAuresArt"
+authors = "TexTrue, LocalizedMC"
+description = '''
+FTBQLocalizationKeys unofficial architectury port.
+'''
+logoFile = "icon.png"
+
+[[dependencies.ftbqkeys]]
+modId = "forge"
+mandatory = true
+versionRange = "[40,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.ftbqkeys]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.ftbqkeys]]
+modId = "architectury"
+mandatory = true
+versionRange = "*"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.ftbqkeys]]
+modId = "kubejs"
+mandatory = true
+versionRange = "*"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.ftbqkeys]]
+modId = "ftbquests"
+mandatory = true
+versionRange = "*"
+ordering = "AFTER"
+side = "BOTH"

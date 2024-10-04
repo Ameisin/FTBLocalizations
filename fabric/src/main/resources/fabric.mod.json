@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "ftbqkeys",
+  "version": "${version}",
+  "name": "FTBQLocalizationKeys",
+  "description": "FTBQLocalizationKeys unofficial architectury port.",
+  "authors": [
+    "TexTrue, LocalizedMC","Yjn024","BlackAuresArt"
+  ],
+  "contact": {
+    "homepage": "https://github.com/LocalizedMC/FTBQLocalizationKeys-Arch",
+    "sources": "https://github.com/LocalizedMC/FTBQLocalizationKeys-Arch"
+  },
+  "license": "CC-BY-4.0",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.localmc.tools.ftbqkeys.fabric.FTBQKeysModFabric"
+    ]
+  },
+  "depends": {
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "architectury": "*",
+    "kubejs": "*",
+    "ftbquests": "*"
+  }
+}
