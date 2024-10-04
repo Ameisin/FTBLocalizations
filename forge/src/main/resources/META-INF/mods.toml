@@ -11,7 +11,7 @@ displayURL = "https://github.com/LocalizedMC/FTBQLocalizationKeys-Arch"
 credits = "BlackAuresArt"
 authors = "TexTrue, LocalizedMC"
 description = '''
-FTBQLocalizationKeys unofficial architectury port.
+FTBQLocalizationKeys
 '''
 logoFile = "icon.png"
 
@@ -25,19 +25,12 @@ side = "BOTH"
 [[dependencies.ftbqkeys]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.18,)"
+versionRange = "[1.20,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.ftbqkeys]]
 modId = "architectury"
-mandatory = true
-versionRange = "*"
-ordering = "AFTER"
-side = "BOTH"
-
-[[dependencies.ftbqkeys]]
-modId = "kubejs"
 mandatory = true
 versionRange = "*"
 ordering = "AFTER"

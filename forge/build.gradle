@@ -7,6 +7,12 @@ architectury {
     forge()
 }
 
+loom {
+    forge {
+        mixinConfig "ftbqkeys.common.mixins.json"
+    }
+}
+
 project.archivesBaseName = rootProject.archivesBaseName + "-forge"
 
 configurations {
@@ -15,11 +21,6 @@ configurations {
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentForge.extendsFrom common
-}
-
-repositories {
-    mavenLocal()
-    maven { url "https://modmaven.dev/" }
 }
 
 dependencies {

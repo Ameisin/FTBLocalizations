@@ -3,7 +3,7 @@
   "id": "ftbqkeys",
   "version": "${version}",
   "name": "FTBQLocalizationKeys",
-  "description": "FTBQLocalizationKeys unofficial architectury port.",
+  "description": "FTBQLocalizationKeys",
   "authors": [
     "TexTrue, LocalizedMC","Yjn024","BlackAuresArt"
   ],
@@ -21,9 +21,11 @@
   },
   "depends": {
     "fabric": "*",
-    "minecraft": "1.18.x",
+    "minecraft": "1.20.x",
     "architectury": "*",
-    "kubejs": "*",
     "ftbquests": "*"
-  }
+  },
+  "mixins": [
+    "ftbqkeys.common.mixins.json"
+  ]
 }
