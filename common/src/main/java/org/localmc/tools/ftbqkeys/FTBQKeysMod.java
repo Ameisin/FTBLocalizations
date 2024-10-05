@@ -9,6 +9,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
 import dev.architectury.event.events.common.CommandRegistrationEvent;
 import dev.architectury.platform.Platform;
+import dev.ftb.mods.ftblibrary.util.TooltipList;
 import dev.ftb.mods.ftbquests.api.FTBQuestsAPI;
 import dev.ftb.mods.ftbquests.quest.*;
 import dev.ftb.mods.ftbquests.quest.loot.RewardTable;
@@ -16,12 +17,14 @@ import dev.ftb.mods.ftbquests.quest.reward.Reward;
 import dev.ftb.mods.ftbquests.quest.task.Task;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandSource;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import org.apache.commons.io.FileUtils;
 import org.localmc.tools.ftbqkeys.mixin.BaseQuestFileAccessor;
-import org.localmc.tools.ftbqkeys.mixin.ChapterImageMixin;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +36,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FTBQKeysMod {
-    public static final String MODID = "ftbqkeys";
+    public static final String MODID = "ftbqlocalizations";
     public static final Path gameDir = Platform.getGameFolder();
     public static final Path configDir = Platform.getConfigFolder();
     public static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -80,7 +83,8 @@ public class FTBQKeysMod {
                         RewardTable table = file.getRewardTables().get(i);
 
                         transKeys.put("loot_table." + (i + 1), table.getRawTitle());
-                        table.getRawTitle().compareTo("{" + "loot_table." + (i + 1) + "}");
+                        // table.getRawTitle().compareTo("{" + "loot_table." + (i + 1) + "}");
+                        table.setRawTitle("{" + "loot_table." + (i + 1) + "}");
                     }
 
                     for (int i = 0; i < ((BaseQuestFileAccessor) file).getChapterGroups().size(); i++) {
@@ -88,35 +92,45 @@ public class FTBQKeysMod {
 
                         if (!chapterGroup.getRawTitle().isBlank()) {
                             transKeys.put("category." + (i + 1), chapterGroup.getRawTitle());
-                            chapterGroup.getRawTitle().compareTo("{" + "category." + (i + 1) + "}");
+                            // chapterGroup.getRawTitle().compareTo("{" + "category." + (i + 1) + "}");
+                            chapterGroup.setRawTitle("{" + "category." + (i + 1) + "}");
                         }
                     }
 
                     for (int i = 0; i < file.getAllChapters().size(); i++) {
                         Chapter chapter = file.getAllChapters().get(i);
+                        NbtCompound chapterNbt = new NbtCompound();
 
                         String prefix = "chapter." + (i + 1);
+                        List<String> modifiedSubtitles;
 
                         if (!chapter.getRawTitle().isBlank()) {
                             transKeys.put(prefix + ".title", chapter.getRawTitle());
-                            chapter.getRawTitle().compareTo("{" + prefix + ".title" + "}");
+                            // chapter.getRawTitle().compareTo("{" + prefix + ".title" + "}");
+                            chapter.setRawTitle("{" + prefix + ".title" + "}");
                         }
 
-                        if (chapter.getRawSubtitle().size() > 0) {
+                        if (!chapter.getRawSubtitle().isEmpty()) {
+                            modifiedSubtitles = new ArrayList<>(chapter.getRawSubtitle());
                             transKeys.put(prefix + ".subtitle", String.join("\n", chapter.getRawTitle()));
-                            chapter.getRawSubtitle().clear();
-                            chapter.getRawSubtitle().add("{" + prefix + ".subtitle" + "}");
+                            // chapter.getRawSubtitle().clear();
+                            // chapter.getRawSubtitle().add("{" + prefix + ".subtitle" + "}");
                         }
 
 
                         for (int i1 = 0; i1 < chapter.images().toList().size(); i1++) {
-                            //ChapterImage chapterImage = chapter.images().toList().get(i1);
-                            List<String> hover = new ChapterImageMixin().getHovers();
+                            ChapterImage chapterImage = chapter.images().toList().get(i1);
+                            NbtCompound nbtCompound = new NbtCompound();
+                            chapterImage.readData(nbtCompound);
+                            NbtList hovers = nbtCompound.getList("hover", 8);
 
-                            if (!hover.isEmpty()) {
-                                transKeys.put(prefix + ".image." + (i1 + 1), String.join("\n", hover));
-                                hover.clear();
-                                hover.add("{" + prefix + ".image." + (i1 + 1) + "}");
+                            if (!hovers.isEmpty()) {
+                                TooltipList tooltipList = new TooltipList();
+                                for(NbtElement hover : hovers) {
+                                    transKeys.put(prefix + ".image." + (i1 + 1), String.join("\n", hover.asString()));
+                                    tooltipList.add(Text.literal("{" + prefix + ".image." + (i1 + 1) + "}"));
+                                    chapterImage.addHoverText(tooltipList);
+                                }
                             }
                         }
 
@@ -125,15 +139,15 @@ public class FTBQKeysMod {
 
                             if (!quest.getRawTitle().isBlank()) {
                                 transKeys.put(prefix + ".quest." + (i1 + 1) + ".title", quest.getRawTitle());
-                                quest.getRawTitle().compareTo("{" + prefix + ".quest." + (i1 + 1) + ".title}");
+                                quest.setRawTitle("{" + prefix + ".quest." + (i1 + 1) + ".title}");
                             }
 
                             if (!quest.getRawSubtitle().isBlank()) {
                                 transKeys.put(prefix + ".quest." + (i1 + 1) + ".subtitle", quest.getRawTitle());
-                                quest.getRawSubtitle().compareTo("{" + prefix + ".quest." + (i1 + 1) + ".subtitle" + "}");
+                                quest.setRawSubtitle("{" + prefix + ".quest." + (i1 + 1) + ".subtitle" + "}");
                             }
 
-                            if (quest.getRawDescription().size() > 0) {
+                            if (!quest.getRawDescription().isEmpty()) {
                                 List<String> descList = Lists.newArrayList();
 
                                 StringJoiner joiner = new StringJoiner("\n");
@@ -180,18 +194,18 @@ public class FTBQKeysMod {
                             for (int i2 = 0; i2 < quest.getTasks().size(); i2++) {
                                 Task task = quest.getQuestFile().getTask(i2);
 
-                                if (!task.getRawTitle().isBlank()) {
+                                if (task != null && !task.getRawTitle().isBlank()) {
                                     transKeys.put(prefix + ".quest." + (i1 + 1) + ".task." + (i2 + 1) + ".title", task.getRawTitle());
-                                    task.getRawTitle().compareTo("{" + prefix + ".quest." + (i1 + 1) + ".task." + (i2 + 1) + ".title}");
+                                    task.setRawTitle("{" + prefix + ".quest." + (i1 + 1) + ".task." + (i2 + 1) + ".title}");
                                 }
                             }
 
                             for (int i2 = 0; i2 < quest.getRewards().size(); i2++) {
                                 Reward reward = quest.getQuestFile().getReward(i2);
 
-                                if (!reward.getRawTitle().isBlank()) {
+                                if (reward != null && !reward.getRawTitle().isBlank()) {
                                     transKeys.put(prefix + ".quest." + (i1 + 1) + ".reward." + (i2 + 1) + ".title", reward.getRawTitle());
-                                    reward.getRawTitle().compareTo("{" + prefix + ".quest." + (i1 + 1) + ".reward." + (i2 + 1) + ".title}");
+                                    reward.setRawTitle("{" + prefix + ".quest." + (i1 + 1) + ".reward." + (i2 + 1) + ".title}");
                                 }
                             }
                         }
@@ -208,7 +222,7 @@ public class FTBQKeysMod {
                         saveLang(transKeys, "en_us", transFiles);
                     }
 
-                    context.getSource().sendMessage(Text.translatable("command.ftbqkeys.message", parent.getAbsolutePath()));
+                    context.getSource().sendMessage(Text.translatable("command.ftbqkeys.message.success", parent.getAbsolutePath()));
 
                 } catch (Exception e) {
                     e.printStackTrace();

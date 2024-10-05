@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "id": "ftbqkeys",
+  "id": "ftbqlocalizations",
   "version": "${version}",
-  "name": "FTBQLocalizationKeys",
-  "description": "FTBQLocalizationKeys",
+  "name": "FTBQLocalizations",
+  "description": "FTBQLocalizations",
   "authors": [
-    "TexTrue, LocalizedMC","Yjn024","BlackAuresArt"
+    "Ameisin, TexTrue, LocalizedMC","Yjn024","BlackAuresArt"
   ],
   "contact": {
-    "homepage": "https://github.com/LocalizedMC/FTBQLocalizationKeys-Arch",
-    "sources": "https://github.com/LocalizedMC/FTBQLocalizationKeys-Arch"
+    "homepage": "https://github.com/Ameisin/FTBQLocalizations",
+    "sources": "https://github.com/Ameisin/FTBQLocalizations"
   },
   "license": "CC-BY-4.0",
   "icon": "icon.png",

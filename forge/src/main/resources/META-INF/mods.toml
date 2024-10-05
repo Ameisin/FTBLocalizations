@@ -4,39 +4,39 @@ loaderVersion = "[40,)"
 license = "CC-BY-4.0"
 
 [[mods]]
-modId = "ftbqkeys"
+modId = "ftbqlocalizations"
 version = "${version}"
-displayName = "FTBQLocalizationKeys"
+displayName = "FTBQLocalizations"
 displayURL = "https://github.com/LocalizedMC/FTBQLocalizationKeys-Arch"
-credits = "BlackAuresArt"
-authors = "TexTrue, LocalizedMC"
+credits = "BlackAuresArt, TexTrue, LocalizedMC"
+authors = "Ameisin"
 description = '''
-FTBQLocalizationKeys
+FTBQLocalizations
 '''
 logoFile = "icon.png"
 
-[[dependencies.ftbqkeys]]
+[[dependencies.ftbqlocalizations]]
 modId = "forge"
 mandatory = true
 versionRange = "[40,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.ftbqkeys]]
+[[dependencies.ftbqlocalizations]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.ftbqkeys]]
+[[dependencies.ftbqlocalizations]]
 modId = "architectury"
 mandatory = true
 versionRange = "*"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.ftbqkeys]]
+[[dependencies.ftbqlocalizations]]
 modId = "ftbquests"
 mandatory = true
 versionRange = "*"
