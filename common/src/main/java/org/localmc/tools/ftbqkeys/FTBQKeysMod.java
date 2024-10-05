@@ -112,7 +112,7 @@ public class FTBQKeysMod {
 
                         if (!chapter.getRawSubtitle().isEmpty()) {
                             modifiedSubtitles = new ArrayList<>(chapter.getRawSubtitle());
-                            transKeys.put(prefix + ".subtitle", String.join("\n", chapter.getRawTitle()));
+                            transKeys.put(prefix + ".subtitle", String.join("\n", chapter.getRawSubtitle()));
                             // chapter.getRawSubtitle().clear();
                             // chapter.getRawSubtitle().add("{" + prefix + ".subtitle" + "}");
                         }
@@ -143,7 +143,7 @@ public class FTBQKeysMod {
                             }
 
                             if (!quest.getRawSubtitle().isBlank()) {
-                                transKeys.put(prefix + ".quest." + (i1 + 1) + ".subtitle", quest.getRawTitle());
+                                transKeys.put(prefix + ".quest." + (i1 + 1) + ".subtitle", quest.getRawSubtitle());
                                 quest.setRawSubtitle("{" + prefix + ".quest." + (i1 + 1) + ".subtitle" + "}");
                             }
 
